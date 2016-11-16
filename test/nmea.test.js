@@ -129,9 +129,11 @@ describe('nmea',function() {
             assert.equal(n.latitudeError, 0.023);
             assert.equal(n.longitudeError, 0.02);
             assert.equal(n.altitudeError, 0.031);
-            assert.equal(n.rms1D, 0.030);
-            assert.equal(n.rms2D, 0.061);
-            assert.equal(n.rms3D, 0.091);
+
+            assert.equal(n.drms, 0.022);
+            assert.equal(n.hrms, 0.043);
+            assert.equal(n['3drms'], 0.065);
+            assert.equal(n.rms3d, 0.025);
         }
     });
 
