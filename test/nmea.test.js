@@ -94,6 +94,7 @@ describe('nmea',function() {
         assert.strictEqual(n.sat[3].ss,0,'sat 3 ss');
       }
     });
+
     it("parse GPGSA",function() {
         var s = 'GPGSA';
         var n = nmea.parse("$GPGSA,A,3,13,07,04,08,17,10,,,,,,,4.3,2.8,3.2*30");
@@ -113,6 +114,29 @@ describe('nmea',function() {
             assert.strictEqual(n.vdop,3.2,'vdop');
         }
     });
+
+    it("parse GPGST",function() {
+        var s = 'GPGST';
+        var n = nmea.parse("$GPGST,172814.0,0.006,0.023,0.020,273.6,0.023,0.020,0.031*6A");
+        assert.ok(n !== null,'parser result not null');
+        if (n !== null) {
+            assert.ok(n.id === s,s + '!== ' + n.id);
+            assert.equal(n.time, 172814);
+            assert.equal(n.residualsRms, 0.006);
+            assert.equal(n.semiMajorError, 0.023);
+            assert.equal(n.semiMinorError, 0.02);
+            assert.equal(n.orientationError, 273.6);
+            assert.equal(n.latitudeError, 0.023);
+            assert.equal(n.longitudeError, 0.02);
+            assert.equal(n.altitudeError, 0.031);
+
+            assert.equal(n.drms, 0.022);
+            assert.equal(n.hrms, 0.043);
+            assert.equal(n['3drms'], 0.065);
+            assert.equal(n.rms3d, 0.025);
+        }
+    });
+
     it("parse GPVTG",function() {
         var s = 'GPVTG';
         var n = nmea.parse("$GPVTG,276.8,T,,M,018.1,N,000.0,K,A*0E");
